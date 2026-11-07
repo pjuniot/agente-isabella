@@ -2,6 +2,9 @@ name: Compilar Isabella Android
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/compilar_isabella_android.yml'
 
 permissions:
   contents: read
