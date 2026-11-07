@@ -1,5 +1,3 @@
-.github/workflows/compilar_isabella_android.yml
-
 name: Compilar Isabella Android
 
 on:
