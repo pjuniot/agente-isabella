@@ -1,0 +1,42 @@
+.github/workflows/compilar_isabella_android.yml
+
+name: Compilar Isabella Android
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compilar:
+    runs-on: macos-15
+
+    steps:
+      - name: Obtener codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Preparar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar componentes Android
+        run: |
+          sdkmanager "platforms;android-34" "build-tools;34.0.0"
+
+      - name: Compilar Isabella
+        run: |
+          chmod +x ./compilar.sh
+          ./compilar.sh isabellallamadas
+
+      - name: Publicar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Isabella-Android
+          path: apps/isabellallamadas/build/isabellallamadas.apk
+          if-no-files-found: error
